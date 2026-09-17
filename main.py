@@ -92,7 +92,7 @@ def get_posts(db : Annotated[Session , Depends(get_db)]):
 
 
 
-# creating User Email
+# creating User 
 @app.post("/api/users/", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
 def  create_user(user: UserCreate , db : Annotated[Session , Depends(get_db)]):
     result = db.execute(select(model.User).where(model.User.username == user.username))
@@ -123,6 +123,7 @@ def  create_user(user: UserCreate , db : Annotated[Session , Depends(get_db)]):
     db.refresh(new_user)
 
     return new_user
+
 
 
 
@@ -207,9 +208,42 @@ def update_post_full(post_id : int , post_data : PostCreate , db : Annotated[Ses
 
     db.commit()
     db.refresh(post)
-
     return post
          
+
+@app.patch("/api/posts/{post_id}" , response_model=PostResponse)
+def post_update_partial(post_id : int , post_data : PostUpdate , db : Annotated[Session , Depends(get_db)]):
+     result = db.execute(select(model.Post).where(model.Post.id == post_id))
+     post = result.scalars().first();
+
+     if not post:
+          raise HTTPException(
+               status_code= status.HTTP_404_NOT_FOUND, 
+               detail= "Post not found"
+          )
+
+     update_data = post_data.model_dump(exclude_unset=True)
+     for field , value in update_data.items():
+          setattr(post , field ,value)
+
+     db.commit()
+     db.refresh(post)
+     return post
+
+@app.delete("/api/posts/{post_id}" , status_code=status.HTTP_204_NO_CONTENT)
+def delete_post(post_id: int , db : Annotated[Session, Depends(get_db)]):
+     result = db.execute(select(model.Post).where(model.Post.id == post_id))
+     post = result.scalars().first()
+
+     if not post:
+          raise HTTPException(
+               status_code= status.HTTP_404_NOT_FOUND,
+               detail="Post not found"
+          )
+
+     db.delete(post)
+     db.commit()
+
 
 
     
