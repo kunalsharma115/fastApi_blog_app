@@ -13,7 +13,7 @@ from sqlalchemy.orm import Session
 
 import model
 from database import Base , engine , get_db 
-from schemas import PostCreate , PostResponse ,PostUpdate, UserCreate, UserResponse
+from schemas import PostCreate , PostResponse ,PostUpdate, UserCreate, UserResponse, UserUpdate
 
 
 Base.metadata.create_all(bind = engine)
@@ -125,6 +125,59 @@ def  create_user(user: UserCreate , db : Annotated[Session , Depends(get_db)]):
     return new_user
 
 
+
+@app.patch("/api/users/{user_id}", response_model=UserResponse)
+def update_user(user_id:int , user_data: UserUpdate , db : Annotated[Session , Depends(get_db)]):
+     result = db.execute(select(model.User).where(model.User.id == user_id))
+     user = result.scalars().first()
+
+     if not user:
+          raise HTTPException(
+               status_code = status.HTTP_404_NOT_FOUND,
+               detail= "User does not exists"
+          )
+
+     if user.username is not None and user_data.username != user.username:
+          result = db.execute(select(model.User).where(model.User.username == user_data.username))
+          existing_user = result.scalars().first();
+
+          if existing_user:
+               raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail= "Username already exists"
+               )
+
+     if user_data.username is not None:
+        user.username = user_data.username
+
+     if user_data.email is not None:
+        user.email = user_data.email
+
+     if user_data.image_file is not None:
+        user.image_file = user_data.image_file
+
+
+     db.commit()
+     db.refresh(user)
+     return user
+
+
+
+#delete user
+
+@app.delete("/api/users/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_user(user_id : int , db: Annotated[Session , Depends(get_db)]):
+    result = db.execute(select(model.User).where(model.User.id == user_id))
+    user = result.scalars().first()
+
+    if not user:
+        raise HTTPException(
+             status_code= status.HTTP_404_NOT_FOUND,
+             detail= "user does not exists"
+        )
+
+    db.delete(user)
+    db.commit()
 
 
 # userPosts 
