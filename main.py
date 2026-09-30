@@ -20,6 +20,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 import model
 from database import Base , engine , get_db 
 from routers import posts , users
+from schemas import PostResponse
+
 
 
 @asynccontextmanager
@@ -37,15 +39,23 @@ app.mount("/media" , StaticFiles(directory= "media") , name = "media")
 
 templates = Jinja2Templates(directory="templates")
 
-app.include_router(users.router, prefix="/api/users", tags=["users"])
-app.include_router(posts.router, prefix="/api/posts", tags=["posts"])
+app.include_router(users.router, prefix="/api/users" , tags=["users"])
+app.include_router(posts.router , prefix="/api/posts" , tags=["posts"])
+
+
+
+@app.get("/api/posts/", response_model=list[PostResponse])
+async def get_posts(db : Annotated[AsyncSession , Depends(get_db)]):
+    result = await db.execute(select(model.Post).options(selectinload(model.Post.author)))
+    posts = result. scalars().all()
+    return posts
 
 
 #home route
 @app.get("/",  name = "home")
 @app.get("/posts",  name = "posts")
 async def home(request : Request , db : Annotated[AsyncSession , Depends(get_db)]):
-    result = await db.execute(select(model.Post).options(selectinload(model.Post.author)),)
+    result = await db.execute(select(model.Post).options(selectinload(model.Post.author)).order_by(model.Post.date_posted.desc()))
     posts = result.scalars().all()
     return templates.TemplateResponse(
         request,
@@ -88,7 +98,8 @@ async def user_post_page(request: Request , user_id : int , db: Annotated[AsyncS
             detail= "User not found"
         )
 
-    result = await db.execute(select(model.Post).options(selectinload(model.Post.author)).where((model.Post.user_id == user_id)))
+    result = await db.execute(select(model.Post).options(selectinload(model.Post.author)).
+                              where((model.Post.user_id == user_id)).order_by(model.Post.date_posted.desc()))
     posts = result.scalars().all()
 
     return templates.TemplateResponse(

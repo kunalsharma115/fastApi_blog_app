@@ -134,6 +134,7 @@ async def get_user_posts(user_id: int, db: Annotated[AsyncSession, Depends(get_d
 
     result = await db.execute(
         select(model.Post).options(selectinload(model.Post.author)).where((model.Post.user_id) == user_id)
+        .order_by(model.Post.date_posted.desc())
     )
     posts = result.scalars().all()
     return posts
