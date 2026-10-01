@@ -18,6 +18,7 @@ async def run_tests():
             uid = int(time.time()) % 100000
             test_username = f"user_{uid}"
             test_email = f"user_{uid}@example.com"
+            test_password = "password123"
 
             # 1. Test Home Route (HTML)
             print("\n[1] Testing GET / (Home Page)...")
@@ -30,7 +31,7 @@ async def run_tests():
             print(f"\n[2] Testing POST /api/users/ (Create User: '{test_username}')...")
             res = await client.post(
                 "/api/users/",
-                json={"username": test_username, "email": test_email},
+                json={"username": test_username, "email": test_email, "password": test_password},
             )
             assert res.status_code == 201, f"Failed: {res.status_code} {res.text}"
             user_data = res.json()
@@ -43,10 +44,29 @@ async def run_tests():
             print("\n[3] Testing POST /api/users/ (Duplicate Username Rejection)...")
             res = await client.post(
                 "/api/users/",
-                json={"username": test_username, "email": f"other_{uid}@example.com"},
+                json={"username": test_username, "email": f"other_{uid}@example.com", "password": test_password},
             )
             assert res.status_code == 400, f"Expected 400, got: {res.status_code}"
             print("    [PASS] Duplicate username correctly rejected (400 Bad Request)")
+
+            # 3b. Test Token Generation & Authenticated /me
+            print("\n[3b] Testing POST /api/users/token (Login for access token)...")
+            token_res = await client.post(
+                "/api/users/token",
+                data={"username": test_email, "password": test_password},
+            )
+            assert token_res.status_code == 200, f"Token failed: {token_res.status_code} {token_res.text}"
+            access_token = token_res.json()["access_token"]
+            print("    [PASS] Login successful, JWT access token received")
+
+            print("\n[3c] Testing GET /api/users/me (Verify access token & get user profile)...")
+            me_res = await client.get(
+                "/api/users/me",
+                headers={"Authorization": f"Bearer {access_token}"},
+            )
+            assert me_res.status_code == 200, f"Me failed: {me_res.status_code} {me_res.text}"
+            assert me_res.json()["id"] == user_id
+            print(f"    [PASS] Authenticated user retrieved: {me_res.json()['username']} (200 OK)")
 
             # 4. Test Get User by ID
             print(f"\n[4] Testing GET /api/users/{user_id}...")
@@ -156,8 +176,18 @@ async def run_tests():
             assert "text/html" in res.headers.get("content-type", "")
             print("    [PASS] Browser 404 renders HTML error template (404 Not Found)")
 
+            # 17. Test Login & Register Pages (HTML)
+            print("\n[17] Testing GET /login and GET /register...")
+            login_res = await client.get("/login")
+            assert login_res.status_code == 200, f"Login page failed: {login_res.status_code}"
+            assert "text/html" in login_res.headers.get("content-type", "")
+            reg_res = await client.get("/register")
+            assert reg_res.status_code == 200, f"Register page failed: {reg_res.status_code}"
+            assert "text/html" in reg_res.headers.get("content-type", "")
+            print("    [PASS] Login and Register HTML pages render successfully (200 OK)")
+
     print("\n" + "=" * 60)
-    print("  ALL 16 TESTS PASSED! APPLICATION IS HEALTHY & ERROR-FREE")
+    print("  ALL 17 TESTS PASSED! APPLICATION IS HEALTHY & ERROR-FREE")
     print("=" * 60)
 
 
