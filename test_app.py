@@ -57,12 +57,13 @@ async def run_tests():
             )
             assert token_res.status_code == 200, f"Token failed: {token_res.status_code} {token_res.text}"
             access_token = token_res.json()["access_token"]
+            auth_headers = {"Authorization": f"Bearer {access_token}"}
             print("    [PASS] Login successful, JWT access token received")
 
             print("\n[3c] Testing GET /api/users/me (Verify access token & get user profile)...")
             me_res = await client.get(
                 "/api/users/me",
-                headers={"Authorization": f"Bearer {access_token}"},
+                headers=auth_headers,
             )
             assert me_res.status_code == 200, f"Me failed: {me_res.status_code} {me_res.text}"
             assert me_res.json()["id"] == user_id
@@ -81,6 +82,7 @@ async def run_tests():
             res = await client.patch(
                 f"/api/users/{user_id}",
                 json={"username": updated_name},
+                headers=auth_headers,
             )
             assert res.status_code == 200, f"Failed: {res.status_code}"
             assert res.json()["username"] == updated_name
@@ -93,7 +95,7 @@ async def run_tests():
                 "content": "This is test content written by the automated test suite.",
                 "user_id": user_id,
             }
-            res = await client.post("/api/posts", json=post_payload)
+            res = await client.post("/api/posts", json=post_payload, headers=auth_headers)
             assert res.status_code == 201, f"Failed: {res.status_code} {res.text}"
             post_data = res.json()
             post_id = post_data["id"]
@@ -137,7 +139,7 @@ async def run_tests():
                 "content": "Fully updated content.",
                 "user_id": user_id,
             }
-            res = await client.put(f"/api/posts/{post_id}", json=put_payload)
+            res = await client.put(f"/api/posts/{post_id}", json=put_payload, headers=auth_headers)
             assert res.status_code == 200, f"Failed: {res.status_code} {res.text}"
             assert res.json()["title"] == f"Updated Title {uid}"
             print("    [PASS] Post fully updated (200 OK)")
@@ -145,20 +147,20 @@ async def run_tests():
             # 12. Test Partial Post Update (PATCH)
             print(f"\n[12] Testing PATCH /api/posts/{post_id}...")
             patch_payload = {"title": f"Patched Title {uid}"}
-            res = await client.patch(f"/api/posts/{post_id}", json=patch_payload)
+            res = await client.patch(f"/api/posts/{post_id}", json=patch_payload, headers=auth_headers)
             assert res.status_code == 200, f"Failed: {res.status_code} {res.text}"
             assert res.json()["title"] == f"Patched Title {uid}"
             print("    [PASS] Post partially updated (200 OK)")
 
             # 13. Test Delete Post
             print(f"\n[13] Testing DELETE /api/posts/{post_id}...")
-            res = await client.delete(f"/api/posts/{post_id}")
+            res = await client.delete(f"/api/posts/{post_id}", headers=auth_headers)
             assert res.status_code == 204, f"Failed: {res.status_code}"
             print("    [PASS] Post deleted (204 No Content)")
 
             # 14. Test Delete User
             print(f"\n[14] Testing DELETE /api/users/{user_id}...")
-            res = await client.delete(f"/api/users/{user_id}")
+            res = await client.delete(f"/api/users/{user_id}", headers=auth_headers)
             assert res.status_code == 204, f"Failed: {res.status_code}"
             print("    [PASS] User deleted (204 No Content)")
 
