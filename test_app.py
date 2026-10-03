@@ -138,9 +138,10 @@ async def run_tests():
             print("\n[7] Testing GET /api/posts/...")
             res = await client.get("/api/posts/")
             assert res.status_code == 200, f"Failed: {res.status_code}"
-            posts = res.json()
+            data = res.json()
+            posts = data.get("posts", data)
             assert any(p["id"] == post_id for p in posts)
-            print(f"    [PASS] Post list retrieved (total: {len(posts)}) (200 OK)")
+            print(f"    [PASS] Post list retrieved (total: {data.get('total', len(posts))}) (200 OK)")
 
             # 8. Test Get Single Post (API)
             print(f"\n[8] Testing GET /api/posts/{post_id}...")

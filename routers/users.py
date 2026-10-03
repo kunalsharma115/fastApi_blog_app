@@ -1,7 +1,7 @@
 from __future__ import annotations
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, status, UploadFile
+from fastapi import APIRouter, Depends, HTTPException, status, UploadFile, Query
 from sqlalchemy import func,  select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
@@ -10,7 +10,7 @@ from starlette.concurrency import run_in_threadpool
 
 from database import get_db
 import model
-from schemas import PostResponse, UserCreate, UserPrivate, UserPublic, UserUpdate, Token
+from schemas import PostResponse, UserCreate, UserPrivate, UserPublic, UserUpdate, Token, PaginatedPostResponse
 from image_utils import delete_profile_pic , process_file_image
 
 
@@ -184,9 +184,14 @@ async def delete_user(user_id: int, current_user : CurrentUser, db: Annotated[As
         delete_profile_pic(old_filename)
 
 
-@router.get("/{user_id}/posts", response_model=list[PostResponse])
-async def get_user_posts(user_id: int, db: Annotated[AsyncSession, Depends(get_db)]):
-    result = await db.execute(select(model.User).where((model.User.id) == user_id))
+@router.get("/{user_id}/posts", response_model=PaginatedPostResponse)
+async def get_user_posts(
+    user_id: int, 
+    db: Annotated[AsyncSession, Depends(get_db)],
+    skip: Annotated[int, Query(ge=0)] = 0,
+    limit: Annotated[int, Query(ge=1, le=100)] = settings.posts_per_page,
+):
+    result = await db.execute(select(model.User).where(model.User.id == user_id))
     user = result.scalars().first()
 
     if not user:
@@ -195,12 +200,31 @@ async def get_user_posts(user_id: int, db: Annotated[AsyncSession, Depends(get_d
             detail="User not present",
         )
 
+    count_result = await db.execute(
+        select(func.count())
+        .select_from(model.Post)
+        .where(model.Post.user_id == user_id),
+    )
+    total = count_result.scalar() or 0
+
     result = await db.execute(
-        select(model.Post).options(selectinload(model.Post.author)).where((model.Post.user_id) == user_id)
+        select(model.Post)
+        .options(selectinload(model.Post.author))
+        .where(model.Post.user_id == user_id)
         .order_by(model.Post.date_posted.desc())
+        .offset(skip)
+        .limit(limit)
     )
     posts = result.scalars().all()
-    return posts
+    has_more = skip + len(posts) < total
+
+    return PaginatedPostResponse(
+        posts=[PostResponse.model_validate(post) for post in posts],
+        total=total,
+        skip=skip,
+        limit=limit,
+        has_more=has_more,
+    )
 
 
 @router.patch("/{user_id}/profile", response_model=UserPrivate)
