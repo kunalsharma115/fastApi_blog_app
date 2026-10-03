@@ -44,11 +44,6 @@ app.include_router(posts.router , prefix="/api/posts" , tags=["posts"])
 
 
 
-@app.get("/api/posts/", response_model=list[PostResponse])
-async def get_posts(db : Annotated[AsyncSession , Depends(get_db)]):
-    result = await db.execute(select(model.Post).options(selectinload(model.Post.author)))
-    posts = result. scalars().all()
-    return posts
 
 
 #home route

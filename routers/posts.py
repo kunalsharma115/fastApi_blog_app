@@ -22,7 +22,8 @@ async def get_posts(db: Annotated[AsyncSession, Depends(get_db)]):
     return posts
 
 
-@router.post("", response_model=PostResponse, status_code=status.HTTP_201_CREATED)
+@router.post("/", response_model=PostResponse, status_code=status.HTTP_201_CREATED)
+@router.post("", response_model=PostResponse, status_code=status.HTTP_201_CREATED, include_in_schema=False)
 async def create_post(post: PostCreate,current_user: CurrentUser ,db: Annotated[AsyncSession, Depends(get_db)]):
 
     new_post = model.Post(

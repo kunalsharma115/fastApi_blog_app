@@ -1,6 +1,8 @@
 import asyncio
+import io
 import time
 from httpx import ASGITransport, AsyncClient
+from PIL import Image
 
 import main
 
@@ -87,6 +89,35 @@ async def run_tests():
             assert res.status_code == 200, f"Failed: {res.status_code}"
             assert res.json()["username"] == updated_name
             print(f"    [PASS] Username updated to '{updated_name}' (200 OK)")
+
+            # 5b. Test Profile Picture Upload
+            print(f"\n[5b] Testing PATCH /api/users/{user_id}/profile (Upload Profile Picture)...")
+            img = Image.new("RGB", (100, 100), color="blue")
+            buf = io.BytesIO()
+            img.save(buf, format="JPEG")
+            buf.seek(0)
+            upload_res = await client.patch(
+                f"/api/users/{user_id}/profile",
+                files={"file": ("test_pic.jpg", buf, "image/jpeg")},
+                headers=auth_headers,
+            )
+            assert upload_res.status_code == 200, f"Upload failed: {upload_res.status_code} {upload_res.text}"
+            upload_data = upload_res.json()
+            assert upload_data["image_file"] is not None
+            assert "/media/profile_pics/" in upload_data["image_path"]
+            print(f"    [PASS] Profile picture uploaded: {upload_data['image_file']} (200 OK)")
+
+            # 5c. Test Profile Picture Deletion
+            print(f"\n[5c] Testing DELETE /api/users/{user_id}/profile (Delete Profile Picture)...")
+            del_pic_res = await client.delete(
+                f"/api/users/{user_id}/profile",
+                headers=auth_headers,
+            )
+            assert del_pic_res.status_code == 200, f"Delete pic failed: {del_pic_res.status_code} {del_pic_res.text}"
+            del_pic_data = del_pic_res.json()
+            assert del_pic_data["image_file"] is None
+            assert del_pic_data["image_path"] == "/static/profile_pics/default.jpg"
+            print("    [PASS] Profile picture deleted and reset to default (200 OK)")
 
             # 6. Test Post Creation
             print(f"\n[6] Testing POST /api/posts (Create Post for User {user_id})...")
