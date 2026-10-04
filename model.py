@@ -1,6 +1,6 @@
 from __future__  import annotations
 from datetime import datetime ,UTC
-from sqlalchemy import DATETIME , Integer , TEXT, String, ForeignKey
+from sqlalchemy import DateTime , Integer , TEXT, String, ForeignKey
 from sqlalchemy.orm import Mapped , mapped_column , relationship
 
 from database import Base
@@ -47,11 +47,11 @@ class Post(Base):
         nullable=False ) 
 
     date_posted : Mapped[datetime] = mapped_column(
-    DATETIME(timezone = True),
+    DateTime(timezone = True),
     default= lambda :datetime.now(UTC),
     )
     
-
+    likes : Mapped[int] = mapped_column(Integer , default=0 , server_default="0")
     author : Mapped[User] = relationship(back_populates="posts")
 
 
@@ -62,11 +62,11 @@ class PasswordResetToken(Base):
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
     token_hash: Mapped[str] = mapped_column(String(64), unique=True, nullable=False)
     expires_at: Mapped[datetime] = mapped_column(
-        DATETIME(timezone=True),
+        DateTime(timezone=True),
         nullable=False,
     )
     created_at: Mapped[datetime] = mapped_column(
-        DATETIME(timezone=True),
+        DateTime(timezone=True),
         default=lambda: datetime.now(UTC),
     )
 
