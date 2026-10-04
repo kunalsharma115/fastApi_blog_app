@@ -18,7 +18,7 @@ class Settings(BaseSettings):
     post_per_page: int = 10
     posts_per_page: int = 10
 
-    reset_token_expiration_in_minutes : int = 60
+    reset_token_expire_minutes : int = 60
 
     mail_server: str = "localhost"
     mail_port: int = 587
