@@ -1,4 +1,3 @@
-
 import asyncio
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
@@ -17,221 +16,221 @@ POPULATE_IMAGES_DIR = Path("populate_images")
 USERS = [
     {
         "username": "KunalSharma",
-        "email": "kunalsharma@gmail.com",
-        "password": "TestPassword1!",
+        "email": "kunal.sharma@fastweb.dev",
+        "password": "Kunal@FastWeb2026!",
         "image": "corey.png",
     },
     {
         "username": "DefaultDude",
-        "email": "TestEmail2@test.com",
-        "password": "TestPassword2!",
+        "email": "alex.dude@fastweb.dev",
+        "password": "DefaultDude#2026Pass",
         # No image - uses default
     },
     {
         "username": "WillowTheCat",
-        "email": "TestEmail3@test.com",
-        "password": "TestPassword3!",
+        "email": "willow.feline@fastweb.dev",
+        "password": "WillowPaws$2026Cat",
         "image": "willow.png",
     },
     {
         "username": "FarmDogs",
-        "email": "TestEmail4@test.com",
-        "password": "TestPassword4!",
+        "email": "farm.pack@fastweb.dev",
+        "password": "RanchDogs%2026Bark",
         "image": "farmdogs.png",
     },
     {
         "username": "PoppyTheCoder",
-        "email": "TestEmail5@test.com",
-        "password": "TestPassword5!",
+        "email": "poppy.dev@fastweb.dev",
+        "password": "PoppyCode^2026Dev",
         "image": "poppy.png",
     },
     {
         "username": "GoodBoyBronx",
-        "email": "TestEmail6@test.com",
-        "password": "TestPassword6!",
+        "email": "bronx.pup@fastweb.dev",
+        "password": "GoodBoyBronx&2026",
         "image": "bronx.png",
     },
 ]
 
 POSTS = [
     {
-        "title": "Why I Love FastAPI",
-        "content": "FastAPI has completely changed how I build APIs. The automatic documentation, type hints, and async support make development so much faster. Plus, the performance is incredible!",
+        "title": "Building Scalable Modern Web Apps with FastAPI",
+        "content": "FastAPI has fundamentally revolutionized asynchronous backend development in Python. Combining intuitive type annotations, automatic OpenAPI documentation generation, and blazing-fast Starlette ASGI foundations, it provides developer productivity without sacrificing throughput.",
     },
     {
-        "title": "Corey Schafer Has the Best YouTube Tutorials!",
-        "content": "This was written by a viewer and definitely not by me... I mean him. Totally not written by him, but by me... a real viewer. Seriously, check out his channel for amazing Python content.",
+        "title": "Asynchronous Python: From Coroutines to High-Performance APIs",
+        "content": "Understanding the event loop, task scheduling, and cooperative multitasking unlocks the full potential of Python 3.12+. Non-blocking I/O ensures your web services can comfortably handle thousands of concurrent client requests.",
     },
     {
-        "title": "Async/Await Finally Clicked",
-        "content": "I've been struggling with async programming for months, but FastAPI's approach finally made it click. Using 'async def' for endpoints and 'await' for database calls just makes sense.",
+        "title": "Mastering Pydantic V2: Rust-Powered Serialization",
+        "content": "With its core rewritten in Rust, Pydantic V2 delivers a 5x to 20x speedup for data parsing and validation. Learning ConfigDict, computed fields, and custom validators makes request schemas both bulletproof and incredibly fast.",
     },
     {
-        "title": "Schafer? I Barely Know Her!",
-        "content": "Is anyone actually reading these blog posts? Do they really need to say anything? I can keep going all day. At least AI can... Claude, keep going, please.",
+        "title": "Database Migration Strategies with Alembic",
+        "content": "Schema evolution should always be reproducible and version-controlled. Alembic allows teams to track changes cleanly, test rollbacks safely, and automate migrations in continuous deployment pipelines.",
     },
     {
-        "title": "Pydantic Validation is Magic",
-        "content": "The way Pydantic handles validation in FastAPI is incredible. Define your model with type hints, and boom - automatic validation, serialization, and documentation. No more writing validation code by hand!",
+        "title": "REST vs GraphQL vs gRPC: Choosing the Right API Style",
+        "content": "Every communication protocol serves distinct system requirements. REST excels in caching and simplicity, GraphQL solves over-fetching for complex frontends, and gRPC dominates microservice internal communication.",
     },
     {
-        "title": "From Flask to FastAPI",
-        "content": "I made the switch from Flask to FastAPI last month. The learning curve was minimal, and the benefits are huge. Automatic OpenAPI docs, better performance, and native async support. No regrets!",
+        "title": "JWT Authentication Best Practices in Production",
+        "content": "Stateless JWT tokens are powerful, but security requires strict implementation: always sign with asymmetric RS256 or strong HS256 secrets, keep lifespans short, enforce HTTPS, and implement secure token revocation mechanisms.",
     },
     {
-        "title": "Some of My Favorite Horror Movies",
-        "content": "I love horror movies and practical effects. One of my favorites is 'The Thing'. Hereditary is a great modern one, but most people have seen it. One modern one I really liked that not as many people have seen is 'The Night House'. It's a slow burn but really effective. More psychological than jump-scare based.",
+        "title": "Designing Clean Microservices with Domain-Driven Design",
+        "content": "Decoupling business logic from infrastructure frameworks ensures long-term maintainability. Bounded contexts, aggregates, and domain events provide clarity when scaling engineering teams.",
     },
     {
-        "title": "Type Hints Changed My Life",
-        "content": "I used to think type hints were just extra typing (pun intended). But after using FastAPI, I see how they enable incredible tooling - better autocomplete, automatic validation, and self-documenting code.",
+        "title": "Docker Multi-Stage Builds for Minimalist Python Containers",
+        "content": "Multi-stage Docker builds dramatically shrink container images and eliminate build tools from runtime environments. Smaller images mean faster deployments, reduced attack surface, and lower cloud storage costs.",
     },
     {
-        "title": "The Power of Dependency Injection",
-        "content": "FastAPI's dependency injection system is so elegant. Need a database session? Just add it as a parameter. Need the current user? Same thing. It makes the code so clean and testable.",
+        "title": "SQLAlchemy 2.0 Async Session Patterns and Gotchas",
+        "content": "Transitioning to 2.0-style select() and mapped_column() syntax creates clear, type-safe queries. Managing session scopes properly prevents dreaded 'Session is closed' errors during async execution.",
     },
     {
-        "title": "SQLAlchemy 2.0 Is Worth the Upgrade",
-        "content": "If you're still using SQLAlchemy 1.x patterns, it's time to upgrade. The new 2.0 style with select() and mapped_column() is much more explicit and works beautifully with async.",
+        "title": "Effective Multi-Layer Caching with Redis",
+        "content": "Strategic caching turns heavy database bottlenecks into sub-millisecond responses. Implementing cache invalidation patterns like Cache-Aside and Write-Through maintains consistency across distributed nodes.",
     },
     {
-        "title": "Hot Take: Python > JavaScript for APIs",
-        "content": "Yes, I said it. For backend APIs, Python with FastAPI beats Node.js. Fight me in the comments. (Just kidding, this blog doesn't have comments... yet.)",
+        "title": "Securing Web Applications with Essential HTTP Security Headers",
+        "content": "Deploying Content-Security-Policy (CSP), Strict-Transport-Security (HSTS), X-Frame-Options, and X-Content-Type-Options blocks the vast majority of cross-site scripting (XSS) and clickjacking attacks out of the box.",
     },
     {
-        "title": "Understanding HTTP Status Codes",
-        "content": "200 OK, 201 Created, 400 Bad Request, 404 Not Found, 500 Internal Server Error. Learn these codes - they're how your API communicates with the world. FastAPI makes it easy to return the right ones.",
+        "title": "Zero-Downtime Rolling Deployments Explained",
+        "content": "Users shouldn't experience 502 bad gateway errors while you deploy new features. Rolling deployments with health checks ensure traffic only shifts to new pods once they are verified ready.",
     },
     {
-        "title": "Some of My Favorite Video Games",
-        "content": "The one I probably play the most, but not my favorite, is League of Legends... It's a love/hate relationship. If you play, you get it. My favorites are all single-player RPGs. The Elder Scrolls series (Especially Morrowind and Skyrim) were awesome. The Baldur's Gate series took up a lot of my time as a kid, and more recently, the 3rd one was great. Speaking of Baldur's Gate, I love that old isometric style of RPG, so I looked for more modern equivalents and found Pillars of Eternity, which was fantastic. Also both Pathfinder: Kingmaker and Wrath of the Righteous were a lot of fun as well.",
+        "title": "Real-Time WebSockets in Modern Asynchronous Backends",
+        "content": "Bidirectional real-time communication enables chat rooms, live financial tickers, and collaborative documents. FastAPI's native WebSocket support makes connection lifecycles clean and intuitive.",
     },
     {
-        "title": "JWT Authentication Demystified",
-        "content": "JSON Web Tokens seemed scary at first, but they're actually pretty simple. Encode some user data, sign it with a secret, and use it to verify requests. FastAPI + PyJWT makes it straightforward.",
+        "title": "Background Tasks: Native FastAPI vs Celery and Redis",
+        "content": "For lightweight operations like sending welcome emails or logging analytics, FastAPI's BackgroundTasks requires zero extra infrastructure. For heavy compute jobs or scheduled tasks, Celery remains the gold standard.",
     },
     {
-        "title": "Tips for API Design",
-        "content": "Use nouns for resources (/users, /posts), HTTP verbs for actions (GET, POST, PUT, DELETE), and return consistent responses. FastAPI's response_model helps enforce this consistency.",
+        "title": "SQL Query Optimization: Indexes, EXPLAIN Plans, and Joins",
+        "content": "Writing fast SQL starts with understanding query execution plans. Composite indexes, covering indexes, and eliminating N+1 query patterns yield order-of-magnitude performance enhancements.",
     },
     {
-        "title": "Path Parameters vs Query Parameters",
-        "content": "Use path parameters for required resource identifiers (/users/123) and query parameters for optional filters (/posts?author=corey&limit=10). FastAPI handles both beautifully with automatic validation.",
+        "title": "Clean Architecture and Repository Patterns in Python",
+        "content": "Separating domain rules from persistence databases allows you to swap SQLite for PostgreSQL without touching core application logic. Dependency injection makes testing with mocks seamless.",
     },
     {
-        "title": "Error Handling Done Right",
-        "content": "Don't just return 500 for everything! Use HTTPException to return meaningful status codes and messages. Your API consumers will thank you when debugging issues.",
+        "title": "The Comprehensive Guide to Unit and Integration Testing with Pytest",
+        "content": "Confidence in shipping code stems from comprehensive test suites. Async HTTP test clients, isolated transactional fixtures, and mocking external services guarantee resilient software releases.",
     },
     {
-        "title": "Why I Switched to UV",
-        "content": "UV is blazingly fast for Python package management. Install packages in milliseconds instead of minutes. If you haven't tried it yet, you're missing out!",
+        "title": "API Rate Limiting and DoS Protection Strategies",
+        "content": "Protecting endpoints from abusive clients or runaway scrapers is essential. Leaky-bucket and sliding-window algorithms backed by Redis ensure fair API quota distribution across all consumers.",
     },
     {
-        "title": "What About Favorite Books?",
-        "content": "I don't read a lot of fiction. The last fiction book I read was 'The Martian' by Andy Weir, which I really enjoyed. But most of my reading is non-fiction. Some of my favorites are 'Meditations' by Marcus Aurelius, 'Conscious' by Annaka Harris, 'How to Die' by Seneca, and 'The Last Lecture' by Randy Pausch. The latest fiction book I'm reading through (and have been for a while) is 'House of Leaves' by Mark Z. Danielewski. It's... different, but awesome.",
+        "title": "Understanding Cross-Origin Resource Sharing (CORS) Properly",
+        "content": "CORS errors are among the most common web issues. Understanding preflight OPTIONS requests, allowed origins, and credential flags helps configure access securely without using wildcard asterisks.",
     },
     {
-        "title": "Testing FastAPI Applications",
-        "content": "FastAPI's TestClient makes testing a breeze. Write tests for your endpoints, mock dependencies, and catch bugs before they hit production. Your future self will thank you.",
+        "title": "Structured JSON Logging and Distributed Observability",
+        "content": "Plain text log files don't scale in distributed clusters. Emitting structured JSON logs with correlation IDs enables centralized aggregation in Elasticsearch, Datadog, or Grafana Loki.",
     },
     {
-        "title": "Environment Variables and Security",
-        "content": "Never hardcode secrets! Use environment variables and pydantic-settings to keep your API keys, database URLs, and JWT secrets safe. It's Security 101.",
+        "title": "Crafting Beautiful and Developer-Friendly OpenAPI Documentation",
+        "content": "Interactive documentation via Swagger UI and ReDoc is one of FastAPI's killer features. Adding descriptions, status code schemas, and request examples elevates your developer experience.",
     },
     {
-        "title": "CORS: The Bane of Frontend Devs",
-        "content": "Getting CORS errors? FastAPI's CORSMiddleware is your friend. Just remember: be specific about allowed origins in production. Don't use '*' unless you really mean it.",
+        "title": "Monoliths vs Microservices: Choosing Pragmatism Over Hype",
+        "content": "Starting with a well-architected modular monolith is almost always the right choice for early-stage products. Break out microservices only when organizational or throughput boundaries strictly demand it.",
     },
     {
-        "title": "Async Database Queries",
-        "content": "Blocking database calls in async code? That's a performance killer. Use async drivers like psycopg (for PostgreSQL) or aiosqlite to keep your event loop happy.",
+        "title": "Type Safety in Python: How Mypy and Ruff Transform Codebases",
+        "content": "Static typing catches bugs long before code hits production. Modern type hints with TypedDict, Generics, and Union types make refactoring large codebases fast and fearless.",
     },
     {
-        "title": "The Beauty of Response Models",
-        "content": "Response models aren't just for documentation - they filter out sensitive fields automatically. Define what goes out, and Pydantic handles the rest.",
+        "title": "Secrets Management and Zero-Trust Configuration",
+        "content": "Never commit credentials or tokens to version control. Using environment variables, 12-factor principles, and secret managers like Vault ensures your deployment pipeline remains uncompromised.",
     },
     {
-        "title": "Let's Talk Board Games",
-        "content": "I love Settlers of Catan. It's a classic for a reason. I'm actually going to make a sword in my woodshop soon that will be my friend group's trophy for the annual Catan champion that we're going to call 'The Katana of Catan'. One thing I've always wanted to do, but never have, is play an in-person Dungeons & Dragons campaign. I've played so many D&D inspired video games, but never the real deal. Hopefully someday...",
+        "title": "Profiling Asyncio: Detecting Event Loop Blockers",
+        "content": "Running synchronous CPU-heavy work on the event loop starves all other requests. Using run_in_threadpool or ProcessPoolExecutor keeps your server responsive and latency ultra-low.",
     },
     {
-        "title": "API Versioning Strategies",
-        "content": "APIs evolve. Version them from day one! Whether you use URL prefixes (/v1/users) or headers, plan for change. Breaking changes without versioning breaks trust.",
+        "title": "Modern CSS Layouts: Practical CSS Grid and Flexbox",
+        "content": "Gone are the days of float hacks and complex clearance divs. Modern CSS Grid and Flexbox allow for fully responsive, content-adaptive layouts with clean and minimal stylesheets.",
     },
     {
-        "title": "Background Tasks in FastAPI",
-        "content": "Don't make users wait for emails to send or files to process. FastAPI's BackgroundTasks lets you return immediately while work continues in the background.",
+        "title": "Server-Sent Events (SSE) vs WebSockets: What Fits Best?",
+        "content": "When your application only requires one-way real-time server-to-client updates—like AI streaming tokens or notification badges—Server-Sent Events offer a simpler HTTP-compliant alternative to WebSockets.",
     },
     {
-        "title": "Rate Limiting Your API",
-        "content": "Protect your API from abuse with rate limiting. Too many requests? Return 429 Too Many Requests. Your server (and your wallet) will thank you.",
+        "title": "Writing Reusable and Modular Jinja2 Templates",
+        "content": "Template inheritance, macro components, and scoped blocks turn Jinja2 into a powerful templating engine for server-side rendered web applications.",
     },
     {
-        "title": "Documentation That Writes Itself",
-        "content": "Add docstrings to your endpoints and they appear in Swagger UI. Add examples to your Pydantic models and they show up too. Documentation has never been this easy.",
+        "title": "Secure File Uploads and Streaming Validation",
+        "content": "Validating file sizes, MIME types, and scanning magic bytes prevents malicious uploads. Processing incoming streams in chunks guarantees memory usage remains capped even under large payloads.",
     },
     {
-        "title": "WebSockets with FastAPI",
-        "content": "REST isn't the only game in town. FastAPI supports WebSockets for real-time communication. Chat apps, live updates, notifications - all possible!",
+        "title": "Nginx Reverse Proxy Optimization for Python Web Apps",
+        "content": "Placing Nginx ahead of Uvicorn provides static file caching, SSL termination, Gzip compression, and connection buffering, freeing Python worker threads to focus solely on dynamic requests.",
     },
     {
-        "title": "Favorite Hobbies, You Ask?",
-        "content": "Woodworking, hands down. I love making things with wood, but I wish I had more time for it. There's something special about making something with your own hands, with materials that are local. A lot of the stuff I've built came from trees that fell on my family's property. My stuff might not always be as good as something you buy in a store, but there's a story and a connection there that makes it better than anything I could buy elsewhere.",
+        "title": "Automating Code Quality with Pre-commit, Ruff, and Black",
+        "content": "Automated linting and formatting eliminate style debates during code reviews. Running checks on git commit hooks keeps the codebase uniformly clean across the entire engineering team.",
     },
     {
-        "title": "Custom Validators in Pydantic",
-        "content": "Need validation beyond type checking? Pydantic's field_validator and model_validator decorators let you add custom logic. Validate emails, check password strength, whatever you need.",
+        "title": "Graceful Shutdown and Lifecycle Management in FastAPI",
+        "content": "Using async lifespan context managers ensures database connection pools, background workers, and external connections drain cleanly without terminating in-flight client requests.",
     },
     {
-        "title": "The ORM vs Raw SQL Debate",
-        "content": "ORMs like SQLAlchemy add abstraction but can hide performance issues. Know when to use the ORM and when to drop to raw SQL. Both have their place.",
+        "title": "Building Resilient Circuit Breakers in Distributed Systems",
+        "content": "When downstream microservices fail, cascading failures can bring down your whole cluster. Circuit breakers detect failing dependencies and fail fast, preserving system health.",
     },
     {
-        "title": "Debugging Async Code",
-        "content": "Async bugs can be tricky. Use logging liberally, understand the event loop, and don't mix sync and async without care. asyncio.run() is your entry point.",
+        "title": "Webhook Architecture: Delivery Guarantees and HMAC Signatures",
+        "content": "Designing reliable webhooks requires exponential backoff retries, idempotency keys, and HMAC SHA-256 signatures so recipients can verify authenticity and replay safety.",
     },
     {
-        "title": "Containerizing FastAPI Apps",
-        "content": "Docker + FastAPI = deployment bliss. Create a Dockerfile, build your image, and deploy anywhere. Consistency across environments is priceless.",
+        "title": "Database Connection Pooling: Balancing Latency and Concurrency",
+        "content": "Creating new database connections per request is expensive. Proper pool sizing with SQLAlchemy ensures optimal connection reuse without overwhelming database process limits.",
     },
     {
-        "title": "Health Check Endpoints",
-        "content": "Add a /health endpoint to your API. Load balancers and orchestrators need to know if your service is alive. Return 200 if healthy, details if not. I didn't do this in this tutorial, but there's only so much time in a video!",
+        "title": "Consistent API Error Handling: Standardized JSON Responses",
+        "content": "Uniform error structures with clear status codes, machine-readable error codes, and descriptive messages make frontend integration seamless and predictable.",
     },
     {
-        "title": "Hmm... What Else?",
-        "content": "I'm running out of ideas for these blog posts. Maybe I should just write about how great FastAPI is... Oh wait, I've already done that multiple times. Well, if you're still reading, thanks for sticking with it! You're awesome.",
+        "title": "Kubernetes 101 for Python Backend Developers",
+        "content": "Pods, Deployments, Services, and Ingress controllers form the foundation of cloud-native infrastructure. Understanding readiness probes ensures traffic only routes to healthy instances.",
     },
     {
-        "title": "Pagination: Don't Return Everything",
-        "content": "Returning 10,000 records in one response? Please don't. Implement pagination with limit and offset (or better, cursor-based). Your database and clients will be happier.",
+        "title": "Modern Client-Side State Management Without Heavy Frameworks",
+        "content": "You don't always need massive single-page application frameworks. Combining server-rendered HTML with lightweight ES6 modules and Fetch APIs yields incredible performance and simplicity.",
     },
     {
-        "title": "OpenAPI Schema Customization",
-        "content": "FastAPI's auto-generated OpenAPI schema is great, but sometimes you need to customize. Add examples, descriptions, and tags to make your docs shine.",
+        "title": "SQLite in Development to PostgreSQL in Production",
+        "content": "SQLite offers instant zero-config setups for local prototyping and testing, while PostgreSQL delivers enterprise concurrency, robust JSONB querying, and rich full-text indexing in production.",
     },
     {
-        "title": "Security Headers Matter",
-        "content": "Add security headers to your responses: X-Content-Type-Options, X-Frame-Options, Content-Security-Policy. Small effort, big security improvement.",
+        "title": "Writing Self-Documenting and Maintainable Code",
+        "content": "Code is read far more often than it is written. Meaningful variable names, focused single-responsibility functions, and strategic comments create software that teammates love maintaining.",
     },
     {
-        "title": "Caching Strategies",
-        "content": "Not every request needs to hit the database. Use caching with Redis or even in-memory for frequently accessed data. Your response times will plummet (in a good way).",
+        "title": "Observability with Prometheus Metrics and Grafana Dashboards",
+        "content": "Exposing request latency histograms, error counters, and memory utilization metrics turns abstract cloud operations into real-time visual insights.",
     },
     {
-        "title": "GraphQL vs REST",
-        "content": "GraphQL is trendy, but REST is battle-tested. Choose based on your needs, not hype. FastAPI excels at REST, but Strawberry brings GraphQL if you need it.",
+        "title": "Demystifying OAuth2: Grant Types, PKCE, and Scopes",
+        "content": "Understanding Authorization Code flow with PKCE, Client Credentials, and refresh tokens enables secure third-party integrations and delegated authorization.",
     },
     {
-        "title": "Movie Quotes!",
-        "content": "'You wanna know how I did it? This is how I did it, Anton. I never saved anything for the swim back.' - 'Gattaca'. One of my favorite movies of all time. As silly as it sounds, that movie is actually one of the main reasons I decided to pursue an internship at NASA back in college. After that internship, I found I had a craving to learn and do more. It pushed me to take programming more seriously, which eventually led me to where I am today... Which is writing a blog post about FastAPI that's just meant to fill space. TLDR: I watched Gattaca and now I'm writing sample blog posts at 3am on a Saturday for this FastAPI tutorial. And you can too!",
+        "title": "The Evolution of FastWeb: From Concept to Production",
+        "content": "FastWeb showcases how modern Python web applications should be built: clean architectural separation, robust authentication, asynchronous scalability, and elegant user experiences.",
     },
 ]
 
-# The 44th post - always the oldest (easter egg for pagination tutorial)
+# The 44th post - oldest post (anchor post for pagination)
 POST_44 = {
-    "title": "Fun Fact: My High School Football Number Was #44",
-    "content": "If you've paginated all the way to this post, the 44th one... you get to learn this fun fact: that my high school football number was #44. Other notable absolute legends who wore number #44 include: Jerry West (NBA - Also fellow WV Native), Hank Aaron (MLB), and Floyd Little (NFL).",
+    "title": "Welcome to FastWeb: The Architecture and Vision",
+    "content": "FastWeb was built to demonstrate the elegance and speed of modern Python web development. Designed with FastAPI, SQLAlchemy 2.0, asynchronous database interactions, and responsive UI components, it stands as an open and scalable blueprint for production-grade web applications.",
 }
 
 
@@ -245,6 +244,7 @@ async def clear_existing_data() -> None:
 
     # Clear database tables (order respects foreign keys)
     async with AsyncSessionLocal() as db:
+        await db.execute(delete(models.PasswordResetToken))
         await db.execute(delete(models.Post))
         await db.execute(delete(models.User))
         await db.commit()
@@ -353,7 +353,7 @@ async def populate() -> None:
 
         # Create remaining posts in reverse (last in list = oldest, first = newest)
         for i, post_data in enumerate(reversed(POSTS)):
-            await asyncio.sleep(0.05)
+            await asyncio.sleep(0.05)  # brief delay to prevent SQLite file locking contention
             user = users[i % len(users)]
             response = await client.post(
                 "/api/posts",
