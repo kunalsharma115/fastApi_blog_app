@@ -1313,12 +1313,12 @@ async function loadMorePosts() {
 1. User fills email + password on /login page
 2. JS intercepts form submit (event.preventDefault())
 3. JS sends: POST /api/users/token
-   Body (form data): username=kunal.sharma@fastweb.dev&password=Kunal@FastWeb2026!
+   Body (form data): username=kunal.sharma@example.com&password=Kunal@Example2026!
 4. FastAPI matches @router.post("/token")
 5. OAuth2PasswordRequestForm parses form data
-6. Query: SELECT * FROM users WHERE lower(email) = 'kunal.sharma@fastweb.dev'
+6. Query: SELECT * FROM users WHERE lower(email) = 'kunal.sharma@example.com'
    → user = User(id=1, username="KunalSharma", password_hash="$2b$12$...")
-7. verify_password("Kunal@FastWeb2026!", "$2b$12$...") → True
+7. verify_password("Kunal@Example2026!", "$2b$12$...") → True
 8. create_access_token({"sub": "1"}, 30 min) → "eyJhbGciOiJIUzI1NiIs..."
 9. Response: {"access_token": "eyJhbGci...", "token_type": "bearer"}
 10. JS stores token: localStorage.setItem("access_token", "eyJhbGci...")
@@ -1357,7 +1357,7 @@ Step A — Request the reset:
 1. User visits /forgot-password
 2. Types email, clicks "Send Reset Link"
 3. JS sends: POST /api/users/forgot-password
-   Body: {"email": "kunal.sharma@fastweb.dev"}
+   Body: {"email": "kunal.sharma@example.com"}
 4. Server finds user → deletes old tokens → generates new token
    token = "dG9rZW4..." (plain), hash = "a3b4c5..." (SHA-256)
 5. Saves PasswordResetToken(user_id=1, token_hash="a3b4c5...", expires_at=+60min)

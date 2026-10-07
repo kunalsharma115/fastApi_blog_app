@@ -16,37 +16,37 @@ POPULATE_IMAGES_DIR = Path("populate_images")
 USERS = [
     {
         "username": "KunalSharma",
-        "email": "kunal.sharma@fastweb.dev",
-        "password": "Kunal@FastWeb2026!",
+        "email": "kunal.sharma@example.com",
+        "password": "Kunal@Example2026!",
         "image": "corey.png",
     },
     {
         "username": "DefaultDude",
-        "email": "alex.dude@fastweb.dev",
+        "email": "alex.dude@example.com",
         "password": "DefaultDude#2026Pass",
         # No image - uses default
     },
     {
         "username": "WillowTheCat",
-        "email": "willow.feline@fastweb.dev",
+        "email": "willow.feline@example.com",
         "password": "WillowPaws$2026Cat",
         "image": "willow.png",
     },
     {
         "username": "FarmDogs",
-        "email": "farm.pack@fastweb.dev",
+        "email": "farm.pack@example.com",
         "password": "RanchDogs%2026Bark",
         "image": "farmdogs.png",
     },
     {
         "username": "PoppyTheCoder",
-        "email": "poppy.dev@fastweb.dev",
+        "email": "poppy.dev@example.com",
         "password": "PoppyCode^2026Dev",
         "image": "poppy.png",
     },
     {
         "username": "GoodBoyBronx",
-        "email": "bronx.pup@fastweb.dev",
+        "email": "bronx.pup@example.com",
         "password": "GoodBoyBronx&2026",
         "image": "bronx.png",
     },
