@@ -7,4 +7,6 @@ __pycache__/
 *.db
 
 Icon
-credentials/
+credentials/
+docs/CODEBASE_EXPLANATION.md
+
