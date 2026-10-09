@@ -104,7 +104,7 @@ async def run_tests():
             assert upload_res.status_code == 200, f"Upload failed: {upload_res.status_code} {upload_res.text}"
             upload_data = upload_res.json()
             assert upload_data["image_file"] is not None
-            assert "/media/profile_pics/" in upload_data["image_path"]
+            assert "profile_pics/" in upload_data["image_path"]
             print(f"    [PASS] Profile picture uploaded: {upload_data['image_file']} (200 OK)")
 
             # 5c. Test Profile Picture Deletion

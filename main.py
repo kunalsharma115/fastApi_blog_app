@@ -34,7 +34,7 @@ async def lifespan(_app:FastAPI):
 app = FastAPI(lifespan=lifespan)
 
 app.mount("/static",StaticFiles(directory="static"), name="static")
-app.mount("/media" , StaticFiles(directory= "media") , name = "media")
+
 
 templates = Jinja2Templates(directory="templates")
 
@@ -182,40 +182,40 @@ async def reset_password_page(request: Request):
 
 
 @app.exception_handler(StarletteHTTPException)
-async def general_http_exception_handler(request: Request , exception:StarletteHTTPException):
+async def general_http_exception_handler(request: Request, exception: StarletteHTTPException):
+    if request.url.path.startswith("/api"):
+        return await http_exception_handler(request, exception)
 
-        if request.url.path.startswith("/api"):
-           return  await http_exception_handler(request  , exception)
+    message = (
+        exception.detail
+        if exception.detail
+        else "An error occurred . Please try again"
+    )
 
-        message=(
-            exception.detail
-            if exception.detail
-            else "An error occurred . Please try again"
-      )
+    return templates.TemplateResponse(
+        request,
+        "error.html",
+        {
+            "status_code": exception.status_code,
+            "title": exception.status_code,
+            "message": message,
+        },
+        status_code=exception.status_code,
+    )
 
-        return templates.TemplateResponse(
-              request,
-              "error.html",
-              {
-                    "status_code": exception.status_code,
-                    "title": exception.status_code,
-                    "message":message,
-
-              },
-              status_code= exception.status_code,
-        )
 
 @app.exception_handler(RequestValidationError)
-async def validation_exception_handler(request:Request , exception:RequestValidationError):
-            if request.url.path.startswith("/api"):
-                return await request_validation_exception_handler(request , exception)
+async def validation_exception_handler(request: Request, exception: RequestValidationError):
+    if request.url.path.startswith("/api"):
+        return await request_validation_exception_handler(request, exception)
 
-            return templates.TemplateResponse(
-                  request,
-                  "error.html",{
-                  "status_code":status.HTTP_422_UNPROCESSABLE_CONTENT,
-                  "title":status.HTTP_422_UNPROCESSABLE_CONTENT,
-                  "message":"An error occurred . Please try again"
-                  },
-                  status_code=status.HTTP_422_UNPROCESSABLE_CONTENT
-            )
+    return templates.TemplateResponse(
+        request,
+        "error.html",
+        {
+            "status_code": status.HTTP_422_UNPROCESSABLE_CONTENT,
+            "title": status.HTTP_422_UNPROCESSABLE_CONTENT,
+            "message": "An error occurred . Please try again",
+        },
+        status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+    )
